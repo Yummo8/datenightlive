@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "735151566625",
+    "project_id": "date-night-live",
+    "storage_bucket": "date-night-live.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735151566625:android:6c2f12fb82a6ce8bd65860",
+        "android_client_info": {
+          "package_name": "com.example.DNL"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735151566625-fobo36dbevpdh1cn4l5c63nks88n2mi4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQ3HmDAm4yCLkuzJELS26cIn4DzgQTwF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735151566625-fobo36dbevpdh1cn4l5c63nks88n2mi4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
