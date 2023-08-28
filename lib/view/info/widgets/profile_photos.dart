@@ -304,11 +304,11 @@ class _ProfilePhotosState extends State<ProfilePhotos> {
                       borderRadius: BorderRadius.circular(36),
                     ),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       Expanded(
                         child: SizedBox(
                           child: Text(

@@ -41,11 +41,6 @@ class _PromptInputState extends State<PromptInput>
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void dispose() {
     super.dispose();
   }
@@ -335,11 +330,11 @@ class _PromptInputState extends State<PromptInput>
                       borderRadius: BorderRadius.circular(36),
                     ),
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       Expanded(
                         child: SizedBox(
                           child: Text(

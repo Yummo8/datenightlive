@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:DNL/common/values/colors.dart';
 import 'package:DNL/common/values/custom_text_style.dart';

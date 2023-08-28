@@ -1,4 +1,4 @@
-// ignore_for_file: no_logic_in_create_state, unnecessary_this, avoid_function_literals_in_foreach_calls
+// ignore_for_file: no_logic_in_create_state, unnecessary_this, avoid_function_literals_in_foreach_calls, deprecated_member_use
 
 import 'dart:math';
 import 'package:auto_size_text/auto_size_text.dart';

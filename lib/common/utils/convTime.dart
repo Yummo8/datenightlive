@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 String convTimetoMinSec(double time) {

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, body_might_complete_normally_catch_error, depend_on_referenced_packages
 
 import 'dart:io';
 import 'dart:async';

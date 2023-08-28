@@ -71,7 +71,7 @@ class _SignupPageState extends State<SignupPage> {
                 Expanded(
                     child: Column(
                   children: [
-                    Row(children: const <Widget>[
+                    const Row(children: <Widget>[
                       SizedBox(width: 8),
                       Expanded(
                         child: StaticProgressBar(count: 2, current: 1),
