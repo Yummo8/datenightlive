@@ -1,6 +1,6 @@
 # DNL
 
-A new Flutter project.
+Dating Flutter mobile app.
 
 ## Getting Started
 
