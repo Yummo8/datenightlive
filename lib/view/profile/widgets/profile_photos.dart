@@ -1,11 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api, no_leading_underscores_for_local_identifiers, dead_code, unused_element, prefer_null_aware_operators
+import 'package:DNL/core/blocs/profile/profile_bloc.dart';
+import 'package:DNL/core/models/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:DNL/core/blocs/info/info_bloc.dart';
-import 'package:DNL/core/models/info_model.dart';
 import 'package:hl_image_picker/hl_image_picker.dart';
-
 import 'package:DNL/common/values/constants.dart';
 import 'package:DNL/common/utils/convTime.dart';
 import 'package:DNL/common/values/custom_text_style.dart';
@@ -21,20 +20,22 @@ class ProfilePhotos extends StatefulWidget {
 class _ProfilePhotosState extends State<ProfilePhotos> {
   final picker = HLImagePicker();
   List<Media> medias = [];
-  InfoModel _info = InfoModel();
+  ProfileModel _profile = ProfileModel();
 
-  Future<void> updateInfo(medias) async {
-    context.read<InfoBloc>().add(InfoUpdated(_info.copyWith(medias: medias)));
+  Future<void> updateProfile(medias) async {
+    context
+        .read<ProfileBloc>()
+        .add(ProfileUpdated(_profile.copyWith(medias: medias)));
   }
 
   @override
   void initState() {
     super.initState();
 
-    InfoModel info = context.read<InfoBloc>().state.info;
+    ProfileModel profile = context.read<ProfileBloc>().state.profile;
 
     for (int i = 0; i < 6; i++) {
-      if (info.medias == null) {
+      if (profile.medias == null) {
         Media temp = Media(
           index: i,
           type: '',
@@ -44,12 +45,12 @@ class _ProfilePhotosState extends State<ProfilePhotos> {
         );
         medias.add(temp);
       } else {
-        medias = info.medias!;
+        medias = profile.medias!;
       }
     }
 
     setState(() {
-      _info = info;
+      _profile = profile;
     });
   }
 
@@ -169,7 +170,7 @@ class _ProfilePhotosState extends State<ProfilePhotos> {
           break;
       }
 
-      await updateInfo(medias);
+      await updateProfile(medias);
     }
 
     void onDelete(int index) {

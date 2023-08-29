@@ -1,21 +1,23 @@
+import 'package:DNL/common/values/constants.dart';
+
 class ProfileModel {
   final String? firstname;
   final String? lastname;
   final DateTime? birthday;
   final String? gender;
   final bool? genderVisibility;
+  final String? dateGender;
+  final bool? dateGenderVisibility;
   final String? town;
   final bool? townVisibility;
   final List<String>? nation;
   final bool? nationVisibility;
-  final String? religious;
-  final bool? religiousVisibility;
   final String? smoke;
   final bool? smokeVisibility;
   final String? drink;
   final bool? drinkVisibility;
-  final String? drug;
-  final bool? drugVisibility;
+  final List<Media>? medias;
+  final String? bio;
 
   ProfileModel({
     this.firstname,
@@ -23,18 +25,18 @@ class ProfileModel {
     this.birthday,
     this.gender,
     this.genderVisibility,
+    this.dateGender,
+    this.dateGenderVisibility,
     this.town,
     this.townVisibility,
     this.nation,
     this.nationVisibility,
-    this.religious,
-    this.religiousVisibility,
     this.smoke,
     this.smokeVisibility,
     this.drink,
     this.drinkVisibility,
-    this.drug,
-    this.drugVisibility,
+    this.medias,
+    this.bio,
   });
 
   ProfileModel copyWith(
@@ -43,40 +45,40 @@ class ProfileModel {
       DateTime? birthday,
       String? gender,
       bool? genderVisibility,
+      String? dateGender,
+      bool? dateGenderVisibility,
       String? town,
       bool? townVisibility,
       List<String>? nation,
       bool? nationVisibility,
-      String? religious,
-      bool? religiousVisibility,
       String? smoke,
       bool? smokeVisibility,
       String? drink,
       bool? drinkVisibility,
-      String? drug,
-      bool? drugVisibility,
       String? pronoun,
       bool? pronounVisibility,
       int? height,
-      bool? heightVisibility}) {
+      bool? heightVisibility,
+      List<Media>? medias,
+      String? bio}) {
     return ProfileModel(
         firstname: firstname ?? this.firstname,
         lastname: lastname ?? this.lastname,
         birthday: birthday ?? this.birthday,
         gender: gender ?? this.gender,
         genderVisibility: genderVisibility ?? this.genderVisibility,
+        dateGender: dateGender ?? this.dateGender,
+        dateGenderVisibility: dateGenderVisibility ?? this.dateGenderVisibility,
         town: town ?? this.town,
         townVisibility: townVisibility ?? this.townVisibility,
         nation: nation ?? this.nation,
         nationVisibility: nationVisibility ?? this.nationVisibility,
-        religious: religious ?? this.religious,
-        religiousVisibility: religiousVisibility ?? this.religiousVisibility,
         smoke: smoke ?? this.smoke,
         smokeVisibility: smokeVisibility ?? this.smokeVisibility,
         drink: drink ?? this.drink,
         drinkVisibility: drinkVisibility ?? this.drinkVisibility,
-        drug: drug ?? this.drug,
-        drugVisibility: drugVisibility ?? this.drugVisibility);
+        medias: medias ?? this.medias,
+        bio: bio ?? this.bio);
   }
 
   factory ProfileModel.fromSnapshot(Map<String, dynamic> snapshot) {
@@ -88,18 +90,19 @@ class ProfileModel {
             : null,
         gender: snapshot['gender'],
         genderVisibility: snapshot['gender_visibility'],
+        dateGender: snapshot['dateGender'],
+        dateGenderVisibility: snapshot['dateGender_visibility'],
         town: snapshot['town'],
         townVisibility: snapshot['town_visibility'],
         nation: List<String>.from(snapshot['nation'] ?? []),
         nationVisibility: snapshot['nation_visibility'],
-        religious: snapshot['religious'],
-        religiousVisibility: snapshot['religious_visibility'],
         smoke: snapshot['smoke'],
         smokeVisibility: snapshot['smoke_visibility'],
         drink: snapshot['drink'],
         drinkVisibility: snapshot['drink_visibility'],
-        drug: snapshot['drug'],
-        drugVisibility: snapshot['drug_visibility']);
+        medias: List<Media>.from(
+            snapshot['medias'].map((i) => Media.fromJson(i)).toList() ?? []),
+        bio: snapshot['bio']);
   }
 
   Map<String, dynamic> toMap() => {
@@ -108,17 +111,17 @@ class ProfileModel {
         'birthday': birthday?.toString() ?? DateTime.now().toString(),
         'gender': gender,
         'gender_visibility': genderVisibility ?? false,
+        'dateGender': dateGender,
+        'dateGender_visibility': dateGenderVisibility ?? false,
         'town': town,
         'town_visibility': townVisibility ?? false,
         'nation': nation,
         'nation_visibility': nationVisibility ?? false,
-        'religious': religious,
-        'religious_visibility': religiousVisibility ?? false,
         'smoke': smoke,
         'smoke_visibility': smokeVisibility ?? false,
         'drink': drink,
         'drink_visibility': drinkVisibility ?? false,
-        'drug': drug,
-        'drug_visibility': drugVisibility ?? false
+        'medias': medias!.map((e) => e.toJson()).toList(),
+        'bio': bio,
       };
 }

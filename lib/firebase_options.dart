@@ -38,32 +38,31 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyC23GivPQE826iP06DnQvZGuafvcHwrR1A',
-    appId: '1:909447691315:web:c3394e7d3473738743b746',
-    messagingSenderId: '431146169809',
-    projectId: 'the-hafleh-app',
-    authDomain: 'the-hafleh-app.firebaseapp.com',
-    storageBucket: 'the-hafleh-app.appspot.com',
-    measurementId: 'G-KKL6FZWV3P',
-  );
+      apiKey: "AIzaSyDa-kBlp-1sSDTjB6X5bAUGpbHOT5taGS4",
+      authDomain: "date-night-live-2023.firebaseapp.com",
+      projectId: "date-night-live-2023",
+      storageBucket: "date-night-live-2023.appspot.com",
+      messagingSenderId: "1025797410412",
+      appId: "1:1025797410412:web:d7b8857c1c896d71721249",
+      measurementId: "G-4WBBQE4FTR");
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAQ3HmDAm4yCLkuzJELS26cIn4DzgQTwF8',
-    appId: '1:735151566625:android:6c2f12fb82a6ce8bd65860',
-    messagingSenderId: '735151566625',
-    projectId: 'date-night-live',
-    storageBucket: 'date-night-live.appspot.com',
+    apiKey: 'AIzaSyC8DnT4r95TsewrW3Y21HEl9Sv99LKigPQ',
+    appId: '1:1025797410412:android:dd72972a001d7f71721249',
+    messagingSenderId: '1025797410412',
+    projectId: 'date-night-live-2023',
+    storageBucket: 'date-night-live-2023.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDW3p0jKlucOwW_E6CMkKl5vzlgrvT6x5I',
-    appId: '1:735151566625:ios:f11e1f43df73b717d65860',
-    messagingSenderId: '735151566625',
-    projectId: 'date-night-live',
-    storageBucket: 'date-night-live.appspot.com',
+    apiKey: 'AIzaSyCxDBeI8NpnLtHGe88da2UOx5dVck5CiEg',
+    appId: '1:1025797410412:ios:5c6c8c91c7ae7408721249',
+    messagingSenderId: '1025797410412',
+    projectId: 'date-night-live-2023',
+    storageBucket: 'date-night-live-2023.appspot.com',
     androidClientId: '',
     iosClientId:
-        '735151566625-a1que6f5bb7k1b9s2ic1kb0jg5q70751.apps.googleusercontent.com',
-    iosBundleId: 'com.example.DNL',
+        '1025797410412-ria137uep0rmpd06hg1jhvb6ajjhn4j6.apps.googleusercontent.com',
+    iosBundleId: 'com.emma.DNL',
   );
 }

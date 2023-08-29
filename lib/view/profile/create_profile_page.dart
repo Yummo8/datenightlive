@@ -1,5 +1,9 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
+import 'package:DNL/common/utils/images.dart';
+import 'package:DNL/common/values/constants.dart';
+import 'package:DNL/view/profile/widgets/bio_input.dart';
+import 'package:DNL/view/profile/widgets/profile_photos.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,44 +13,42 @@ import 'package:DNL/common/widgets/button.dart';
 import 'package:DNL/common/widgets/static_progress_bar.dart';
 import 'package:DNL/common/utils/logger.dart';
 import 'package:DNL/core/blocs/auth/auth_bloc.dart';
-import 'package:DNL/core/blocs/info/info_bloc.dart';
 import 'package:DNL/core/blocs/profile/profile_bloc.dart';
 import 'package:DNL/core/models/profile_model.dart';
 import 'package:DNL/view/welcome/welcome_done_page.dart';
-import 'package:DNL/view/welcome/welcome_info_page.dart';
 import 'package:DNL/view/profile/widgets/name_input.dart';
 import 'package:DNL/view/profile/widgets/birthday_choose.dart';
 import 'package:DNL/view/profile/widgets/genders_choose.dart';
 import 'package:DNL/view/profile/widgets/hometown_input.dart';
 import 'package:DNL/view/profile/widgets/nationality_choose.dart';
-import 'package:DNL/view/profile/widgets/religious_choose.dart';
 import 'package:DNL/view/profile/widgets/smoke_choose.dart';
 import 'package:DNL/view/profile/widgets/drink_choose.dart';
-import 'package:DNL/view/profile/widgets/drug_choose.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 List<String> headings = [
   "What's your name?",
   "What's your date of birth?",
   "Which gender best describes you?",
+  "Which gender best date with you?",
   "Where is your hometown?",
   "What is your nationality?",
-  "What is your religious beliefs?",
   "Do you smoke?",
   "Do you drink?",
-  "Do you use drugs",
+  "Add your videos and photos",
+  "Write a short bio about yourself",
 ];
 
 List<String> icons = [
   "contact.svg",
   "cake.svg",
   "face.svg",
+  "selfcare.svg",
   "home.svg",
   "contact.svg",
-  "religious.svg",
   "smoke.svg",
   "drink.svg",
-  "drug.svg",
+  "gallery.svg",
+  "bio.svg",
 ];
 
 class CreateProfilePage extends StatefulWidget {
@@ -62,6 +64,7 @@ class CreateProfilePage extends StatefulWidget {
 }
 
 class _CreateProfilePageState extends State<CreateProfilePage> {
+  List<Media> medias = [];
   int _currentPage = 0;
   bool _isValid = false;
 
@@ -80,14 +83,14 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     } else if ((profile.gender == null && _currentPage == 2) ||
         (profile.gender?.isEmpty == true && _currentPage == 2)) {
       validResult = true;
-    } else if ((profile.town == null && _currentPage == 3) ||
-        (profile.town?.isEmpty == true && _currentPage == 3)) {
+    } else if ((profile.dateGender == null && _currentPage == 3) ||
+        (profile.dateGender?.isEmpty == true && _currentPage == 3)) {
       validResult = true;
-    } else if ((profile.nation == null && _currentPage == 4) ||
-        (profile.nation?.isEmpty == true && _currentPage == 4)) {
+    } else if ((profile.town == null && _currentPage == 4) ||
+        (profile.town?.isEmpty == true && _currentPage == 4)) {
       validResult = true;
-    } else if ((profile.religious == null && _currentPage == 5) ||
-        (profile.religious?.isEmpty == true && _currentPage == 5)) {
+    } else if ((profile.nation == null && _currentPage == 5) ||
+        (profile.nation?.isEmpty == true && _currentPage == 5)) {
       validResult = true;
     } else if ((profile.smoke == null && _currentPage == 6) ||
         (profile.smoke?.isEmpty == true && _currentPage == 6)) {
@@ -95,8 +98,10 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     } else if ((profile.drink == null && _currentPage == 7) ||
         (profile.drink?.isEmpty == true && _currentPage == 7)) {
       validResult = true;
-    } else if ((profile.drug == null && _currentPage == 8) ||
-        (profile.drug?.isEmpty == true && _currentPage == 8)) {
+    } else if (_currentPage == 8) {
+      validResult = false;
+    } else if ((profile.bio == null && _currentPage == 9) ||
+        (profile.bio?.isEmpty == true && _currentPage == 9)) {
       validResult = true;
     }
 
@@ -128,6 +133,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         return step8(profile);
       case 8:
         return step9(profile);
+      case 9:
+        return step10(profile);
       default:
         return step1(profile);
     }
@@ -151,9 +158,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       case 6:
         return visibleStep7(profile);
       case 7:
-        return visibleStep8(profile);
-      case 8:
-        return visibleStep9(profile);
+        return visibleStep7(profile);
       default:
         return const SizedBox(
           height: 0,
@@ -164,7 +169,33 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   void createProfile() async {
     try {
       User? authedUser = FirebaseAuth.instance.currentUser;
+      ProfileModel profile = context.read<ProfileBloc>().state.profile;
+
       if (authedUser != null) {
+        context.loaderOverlay.show();
+        if (profile.medias == null) {
+          for (int i = 0; i < 6; i++) {
+            Media temp = Media(
+              index: i,
+              type: '',
+              media: '',
+              thumbnail: '',
+              duration: '',
+            );
+            medias.add(temp);
+            context
+                .read<ProfileBloc>()
+                .add(ProfileUpdated(profile.copyWith(medias: medias)));
+          }
+        } else {
+          for (var i = 0; i < profile.medias!.length; i++) {
+            if (profile.medias![i].type != "") {
+              Media temp =
+                  await uploadMedia(authedUser.uid, profile.medias![i]);
+              profile.medias![i] = temp;
+            }
+          }
+        }
         context.read<ProfileBloc>().add(const ProfileCreateRequested());
       }
     } catch (e) {
@@ -187,10 +218,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         listener: ((context, profileState) {
           if (profileState.status == ProfileStatus.createLoading) {
             context.loaderOverlay.show();
-          } else if (profileState.status == ProfileStatus.created &&
-              context.read<InfoBloc>().state.status == InfoStatus.success) {
+          } else if (profileState.status == ProfileStatus.created) {
             context.loaderOverlay.hide();
-            Navigator.pop(context);
             Navigator.pop(context);
             Navigator.of(context).push<void>(WelcomeDonePage.route());
           }
@@ -211,7 +240,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: StaticProgressBar(
-                                    count: 9, current: _currentPage + 1),
+                                    count: 10, current: _currentPage + 1),
                               ),
                               const SizedBox(width: 8),
                             ]),
@@ -270,17 +299,9 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                             setState(() {
                               _currentPage++;
                             });
-                            if (_currentPage >= 9) {
-                              _currentPage = 8;
-                              if (context.read<InfoBloc>().state.status ==
-                                  InfoStatus.notCreated) {
-                                Navigator.of(context)
-                                    .push<void>(WelcomeInfoPage.route());
-                              }
-                              if (context.read<InfoBloc>().state.status ==
-                                  InfoStatus.success) {
-                                createProfile();
-                              }
+                            if (_currentPage >= 10) {
+                              _currentPage = 9;
+                              createProfile();
                             }
                           })),
                   const SizedBox(width: 24),
@@ -347,6 +368,34 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   }
 
   Widget step4(ProfileModel profile) {
+    return GendersChoose(
+      gender: profile.dateGender,
+      onChange: (value) {
+        context
+            .read<ProfileBloc>()
+            .add(ProfileUpdated(profile.copyWith(dateGender: value)));
+      },
+    );
+  }
+
+  Widget visibleStep4(ProfileModel profile) {
+    return CheckboxListTile(
+      contentPadding: const EdgeInsets.all(0),
+      value: profile.dateGenderVisibility ?? false,
+      activeColor: Theme.of(context).colorScheme.primary,
+      checkColor: Theme.of(context).colorScheme.secondary,
+      controlAffinity: ListTileControlAffinity.leading,
+      onChanged: (bool? value) {
+        setState(() {
+          context.read<ProfileBloc>().add(
+              ProfileUpdated(profile.copyWith(dateGenderVisibility: value)));
+        });
+      },
+      title: const Text("Visible on my profile"),
+    );
+  }
+
+  Widget step5(ProfileModel profile) {
     return HomeTownInput(
       town: profile.town ?? "",
       onChange: (value) {
@@ -357,7 +406,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     );
   }
 
-  Widget visibleStep4(ProfileModel profile) {
+  Widget visibleStep5(ProfileModel profile) {
     return CheckboxListTile(
       contentPadding: const EdgeInsets.all(0),
       value: profile.townVisibility ?? false,
@@ -375,7 +424,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     );
   }
 
-  Widget step5(ProfileModel profile) {
+  Widget step6(ProfileModel profile) {
     return NationalityChoose(
       nation: profile.nation ?? [],
       onChange: (value) {
@@ -386,7 +435,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     );
   }
 
-  Widget visibleStep5(ProfileModel profile) {
+  Widget visibleStep6(ProfileModel profile) {
     return CheckboxListTile(
       contentPadding: const EdgeInsets.all(0),
       value: profile.nationVisibility ?? false,
@@ -398,34 +447,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
           context
               .read<ProfileBloc>()
               .add(ProfileUpdated(profile.copyWith(nationVisibility: value)));
-        });
-      },
-      title: const Text("Visible on my profile"),
-    );
-  }
-
-  Widget step6(ProfileModel profile) {
-    return ReligiousChoose(
-      religious: profile.religious ?? "",
-      onChange: (value) {
-        context
-            .read<ProfileBloc>()
-            .add(ProfileUpdated(profile.copyWith(religious: value)));
-      },
-    );
-  }
-
-  Widget visibleStep6(ProfileModel profile) {
-    return CheckboxListTile(
-      contentPadding: const EdgeInsets.all(0),
-      value: profile.religiousVisibility ?? false,
-      activeColor: Theme.of(context).colorScheme.primary,
-      checkColor: Theme.of(context).colorScheme.secondary,
-      controlAffinity: ListTileControlAffinity.leading,
-      onChanged: (bool? value) {
-        setState(() {
-          context.read<ProfileBloc>().add(
-              ProfileUpdated(profile.copyWith(religiousVisibility: value)));
         });
       },
       title: const Text("Visible on my profile"),
@@ -491,31 +512,17 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   }
 
   Widget step9(ProfileModel profile) {
-    return DrugChoose(
-      drug: profile.drug ?? "",
+    return const ProfilePhotos();
+  }
+
+  Widget step10(ProfileModel profile) {
+    return BioInput(
+      bio: profile.bio ?? "",
       onChange: (value) {
         context
             .read<ProfileBloc>()
-            .add(ProfileUpdated(profile.copyWith(drug: value)));
+            .add(ProfileUpdated(profile.copyWith(bio: value)));
       },
-    );
-  }
-
-  Widget visibleStep9(ProfileModel profile) {
-    return CheckboxListTile(
-      contentPadding: const EdgeInsets.all(0),
-      value: profile.drugVisibility ?? false,
-      activeColor: Theme.of(context).colorScheme.primary,
-      checkColor: Theme.of(context).colorScheme.secondary,
-      controlAffinity: ListTileControlAffinity.leading,
-      onChanged: (bool? value) {
-        setState(() {
-          context
-              .read<ProfileBloc>()
-              .add(ProfileUpdated(profile.copyWith(drugVisibility: value)));
-        });
-      },
-      title: const Text("Visible on my profile"),
     );
   }
 }
