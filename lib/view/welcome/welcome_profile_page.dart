@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:DNL/common/values/colors.dart';
 import 'package:DNL/common/values/custom_text_style.dart';
 import 'package:DNL/common/widgets/button.dart';
 import 'package:DNL/view/profile/create_profile_page.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class WelcomeProfilePage extends StatelessWidget {
   const WelcomeProfilePage({
@@ -23,13 +23,10 @@ class WelcomeProfilePage extends StatelessWidget {
               width: double.infinity,
               height: double.infinity,
               child: Image.asset(
-                "assets/images/2.png",
+                "assets/images/02.jpg",
                 fit: BoxFit.cover,
               )),
           Container(
-              decoration: const BoxDecoration(
-                gradient: ThemeColors.gradient,
-              ),
               width: double.infinity,
               height: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -41,8 +38,8 @@ class WelcomeProfilePage extends StatelessWidget {
                         const SizedBox(
                           height: 61,
                         ),
-                        Image.asset(
-                          "assets/icons/contact.png",
+                        SvgPicture.asset(
+                          "assets/icons/contact.svg",
                           fit: BoxFit.cover,
                         ),
                         const SizedBox(

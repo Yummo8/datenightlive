@@ -3,7 +3,6 @@ import 'package:DNL/core/blocs/profile/profile_bloc.dart';
 import 'package:DNL/core/models/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hl_image_picker/hl_image_picker.dart';
 import 'package:DNL/common/values/constants.dart';
 import 'package:DNL/common/utils/convTime.dart';
@@ -276,61 +275,12 @@ class _ProfilePhotosState extends State<ProfilePhotos> {
             ],
           ),
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: 20),
         Text("Tap to edit,drag to reorder",
             textAlign: TextAlign.center,
             style: CustomTextStyle.getDescStyle(
                 Theme.of(context).colorScheme.onSurface)),
         const SizedBox(height: 24),
-        SizedBox(
-          // width: 361,
-          height: 62,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                "assets/icons/star.svg",
-                fit: BoxFit.cover,
-              ),
-              Expanded(
-                child: Container(
-                  height: 62,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  decoration: ShapeDecoration(
-                    color: const Color(0x0C9D9D9D),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(36),
-                    ),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: SizedBox(
-                          child: Text(
-                            'Videos bring your profile to life, giving others a better sense of who you are :)',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFFF95F80),
-                              fontSize: 14,
-                              fontFamily: 'Noto Sans',
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
       ],
     );
   }

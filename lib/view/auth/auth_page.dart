@@ -103,10 +103,12 @@ class _SignupPageState extends State<SignupPage> {
                       ignoreBlank: false,
                       autoValidateMode: AutovalidateMode.onUserInteraction,
                       hintText: 'Phone number',
-                      textStyle: const TextStyle(fontSize: 16),
+                      textStyle: const TextStyle(
+                          fontSize: 16, color: ThemeColors.border),
                       errorMessage: '*Please enter a valid phone number',
-                      selectorTextStyle:
-                          const TextStyle(color: ThemeColors.primary),
+                      selectorTextStyle: const TextStyle(
+                        color: ThemeColors.border,
+                      ),
                       initialValue: number,
                       textFieldController: controller,
                       selectorButtonOnErrorPadding: 0,
