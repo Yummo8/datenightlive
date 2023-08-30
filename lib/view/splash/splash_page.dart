@@ -33,10 +33,10 @@ class _SplashPageState extends State<SplashPage> {
       width: double.infinity,
       height: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: const <Widget>[
+        children: <Widget>[
           CircularProgressIndicator(
             backgroundColor: ThemeColors.border,
           ),

@@ -1,6 +1,7 @@
 # DNL
 
-Dating Flutter mobile app.
+Date Night Live
+Dating mobile app using Flutter.
 
 ## Getting Started
 

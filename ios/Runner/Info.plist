@@ -20,6 +20,29 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.emma.DNL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.emma.DNL</string>
+				<string>com.googleusercontent.apps.431146169809-jru47dub72fcgo3u4qlgpm6ik21vrc8v</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.emma.DNL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.emma.DNL</string>
+				<string>com.googleusercontent.apps.431146169809-jru47dub72fcgo3u4qlgpm6ik21vrc8v</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>

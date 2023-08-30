@@ -14,44 +14,38 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:DNL/common/values/theme.dart';
 import 'package:DNL/common/route.dart';
 import 'package:DNL/core/repositories/profile_repository.dart';
-import 'package:DNL/core/repositories/info_repository.dart';
 import 'package:DNL/core/blocs/auth/auth_bloc.dart';
-import 'package:DNL/core/blocs/info/info_bloc.dart';
 import 'package:DNL/core/blocs/profile/profile_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
-    name: "date-night-live",
+    name: "date-night-live-2023",
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   final authenticationRepository = AuthRepository();
   final profileRepository = ProfileRepository();
-  final infoRepository = InfoRepository();
+
   runApp(DevicePreview(
       enabled: false,
       builder: (context) => MyApp(
             authenticationRepository: authenticationRepository,
             profileRepository: profileRepository,
-            infoRepository: infoRepository,
           )));
 }
 
 class MyApp extends StatelessWidget {
   final AuthRepository _authenticationRepository;
   final ProfileRepository _profileRepository;
-  final InfoRepository _infoRepository;
 
   const MyApp({
     super.key,
     required AuthRepository authenticationRepository,
     required ProfileRepository profileRepository,
-    required InfoRepository infoRepository,
   })  : _authenticationRepository = authenticationRepository,
-        _profileRepository = profileRepository,
-        _infoRepository = infoRepository;
+        _profileRepository = profileRepository;
 
   @override
   Widget build(BuildContext context) {
@@ -65,11 +59,6 @@ class MyApp extends StatelessWidget {
           BlocProvider<ProfileBloc>(
             create: (_) => ProfileBloc(
               profileRepository: _profileRepository,
-            ),
-          ),
-          BlocProvider<InfoBloc>(
-            create: (_) => InfoBloc(
-              infoRepository: _infoRepository,
             ),
           ),
         ], child: const OverlaySupport.global(child: AppView())));
@@ -97,9 +86,6 @@ class AppView extends StatelessWidget implements TickerProvider {
                   context
                       .read<ProfileBloc>()
                       .add(ProfileLoadRequested(authedUser!.uid));
-                  context
-                      .read<InfoBloc>()
-                      .add(InfoLoadRequested(authedUser.uid));
                 } else if (state is UnAuthenticated) {
                   context.read<ProfileBloc>().add(ProfileSignoutRequested());
                   if (state.error != null && state.error != "") {
@@ -121,7 +107,6 @@ class AppView extends StatelessWidget implements TickerProvider {
                 state: getRouteState(
                   context.select((AuthBloc bloc) => bloc.state),
                   context.select((ProfileBloc bloc) => bloc.state),
-                  context.select((InfoBloc bloc) => bloc.state),
                 ),
                 onGeneratePages: onGenerateAppViewPages,
               )),

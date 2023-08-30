@@ -29,7 +29,7 @@ class Item extends StatelessWidget {
   Widget build(BuildContext context) {
     String dialCode = (country?.dialCode ?? '');
     if (trailingSpace) {
-      dialCode = dialCode.padRight(3, " ");
+      dialCode = dialCode.padRight(5, " ");
     }
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,

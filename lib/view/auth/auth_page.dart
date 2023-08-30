@@ -71,7 +71,7 @@ class _SignupPageState extends State<SignupPage> {
                 Expanded(
                     child: Column(
                   children: [
-                    Row(children: const <Widget>[
+                    const Row(children: <Widget>[
                       SizedBox(width: 8),
                       Expanded(
                         child: StaticProgressBar(count: 2, current: 1),
@@ -103,10 +103,12 @@ class _SignupPageState extends State<SignupPage> {
                       ignoreBlank: false,
                       autoValidateMode: AutovalidateMode.onUserInteraction,
                       hintText: 'Phone number',
-                      textStyle: const TextStyle(fontSize: 16),
+                      textStyle: const TextStyle(
+                          fontSize: 16, color: ThemeColors.border),
                       errorMessage: '*Please enter a valid phone number',
-                      selectorTextStyle:
-                          const TextStyle(color: ThemeColors.primary),
+                      selectorTextStyle: const TextStyle(
+                        color: ThemeColors.border,
+                      ),
                       initialValue: number,
                       textFieldController: controller,
                       selectorButtonOnErrorPadding: 0,

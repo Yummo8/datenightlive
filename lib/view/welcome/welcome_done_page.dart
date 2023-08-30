@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:DNL/common/values/colors.dart';
 import 'package:DNL/common/values/custom_text_style.dart';
@@ -5,6 +7,7 @@ import 'package:DNL/common/widgets/button.dart';
 import 'package:DNL/view/invite/invite_friend_page.dart';
 import 'package:DNL/common/values/constants.dart';
 import 'package:DNL/common/widgets/countdown_timer/timer_countdown.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 class WelcomeDonePage extends StatelessWidget {
@@ -30,7 +33,7 @@ class WelcomeDonePage extends StatelessWidget {
               width: double.infinity,
               height: double.infinity,
               child: Image.asset(
-                "assets/images/1.png",
+                "assets/images/04.jpg",
                 fit: BoxFit.cover,
               )),
           Container(
@@ -48,8 +51,8 @@ class WelcomeDonePage extends StatelessWidget {
                         const SizedBox(
                           height: 61,
                         ),
-                        Image.asset(
-                          "assets/icons/done.png",
+                        SvgPicture.asset(
+                          "assets/icons/done.svg",
                           fit: BoxFit.cover,
                         ),
                         const SizedBox(

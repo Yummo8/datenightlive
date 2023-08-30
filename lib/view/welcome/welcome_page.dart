@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:DNL/common/values/colors.dart';
 import 'package:DNL/common/values/custom_text_style.dart';
 import 'package:DNL/common/widgets/button.dart';
 import 'package:DNL/view/auth/auth_page.dart';
@@ -21,11 +20,10 @@ class WelcomePage extends StatelessWidget {
               width: double.infinity,
               height: double.infinity,
               child: Image.asset(
-                "assets/images/1.png",
+                "assets/images/01.jpg",
                 fit: BoxFit.cover,
               )),
           Container(
-              decoration: const BoxDecoration(gradient: ThemeColors.gradient),
               width: double.infinity,
               height: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -35,7 +33,7 @@ class WelcomePage extends StatelessWidget {
                     Column(
                       children: [
                         const SizedBox(
-                          height: 60,
+                          height: 70,
                         ),
                         Text(
                           'Date Night Live',

@@ -24,11 +24,6 @@ class _NationalityChooseState extends State<NationalityChoose>
   List<String> selectedCountryNames = [];
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void dispose() {
     super.dispose();
   }

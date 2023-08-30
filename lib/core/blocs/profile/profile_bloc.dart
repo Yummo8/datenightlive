@@ -48,7 +48,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             await profileRepository.createProfile(state.profile);
         emit(ProfileState(
           status: ProfileStatus.created,
-          profile: newlyCreatedProfile!,
+          profile: newlyCreatedProfile,
         ));
       } catch (e) {
         emit(state.copyWith(status: ProfileStatus.failure));
