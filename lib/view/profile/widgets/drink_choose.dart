@@ -23,8 +23,7 @@ class _DrinkChooseState extends State<DrinkChoose> {
     final List<String> options = [
       'Yes',
       'Sometimes',
-      'No',
-      'Prefer not to say',
+      'Never',
     ];
 
     return Column(

@@ -100,7 +100,7 @@ class _NameInputState extends State<NameInput>
             },
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 10),
         Text("Last Name is optional, and only shared with matches",
             style: CustomTextStyle.getSpanStyle(
                 Theme.of(context).colorScheme.onSurface)),

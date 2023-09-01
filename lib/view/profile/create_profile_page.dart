@@ -3,7 +3,12 @@
 import 'package:DNL/common/utils/images.dart';
 import 'package:DNL/common/values/constants.dart';
 import 'package:DNL/view/profile/widgets/bio_input.dart';
+import 'package:DNL/view/profile/widgets/dategender_choose.dart';
+import 'package:DNL/view/profile/widgets/height.dart';
+import 'package:DNL/view/profile/widgets/music_choose.dart';
 import 'package:DNL/view/profile/widgets/profile_photos.dart';
+import 'package:DNL/view/profile/widgets/relStatus.dart';
+import 'package:DNL/view/profile/widgets/search_choose.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,35 +25,42 @@ import 'package:DNL/view/profile/widgets/name_input.dart';
 import 'package:DNL/view/profile/widgets/birthday_choose.dart';
 import 'package:DNL/view/profile/widgets/genders_choose.dart';
 import 'package:DNL/view/profile/widgets/hometown_input.dart';
-import 'package:DNL/view/profile/widgets/nationality_choose.dart';
 import 'package:DNL/view/profile/widgets/smoke_choose.dart';
 import 'package:DNL/view/profile/widgets/drink_choose.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 List<String> headings = [
   "What's your name?",
-  "What's your date of birth?",
-  "Which gender best describes you?",
-  "Which gender best date with you?",
-  "Where is your hometown?",
-  "What is your nationality?",
+  "What's your gender?",
+  "Birthday and zodiac sign",
+  "Height and body type",
+  "Where is your location?",
+  "What is your relationship status?",
   "Do you smoke?",
   "Do you drink?",
   "Add your videos and photos",
   "Write a short bio about yourself",
+  "Favorite music genres",
+  "What are you looking for?",
+  "Looking to date?",
+  "Distance preference",
 ];
 
 List<String> icons = [
   "contact.svg",
-  "cake.svg",
   "face.svg",
-  "selfcare.svg",
+  "cake.svg",
+  "height.svg",
   "home.svg",
-  "contact.svg",
+  "relationship.svg",
   "smoke.svg",
   "drink.svg",
   "gallery.svg",
   "bio.svg",
+  "music.svg",
+  "search.svg",
+  "selfcare.svg",
+  "distance.svg",
 ];
 
 class CreateProfilePage extends StatefulWidget {
@@ -80,17 +92,17 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     if ((profile.firstname == null && _currentPage == 0) ||
         (profile.firstname?.isEmpty ?? true && _currentPage == 0)) {
       validResult = true;
-    } else if ((profile.gender == null && _currentPage == 2) ||
-        (profile.gender?.isEmpty == true && _currentPage == 2)) {
+    } else if ((profile.gender == null && _currentPage == 1) ||
+        (profile.gender?.isEmpty == true && _currentPage == 1)) {
       validResult = true;
-    } else if ((profile.dateGender == null && _currentPage == 3) ||
-        (profile.dateGender?.isEmpty == true && _currentPage == 3)) {
+    } else if ((profile.height == null && _currentPage == 3) ||
+        (profile.height?.isEmpty == true && _currentPage == 3)) {
       validResult = true;
     } else if ((profile.town == null && _currentPage == 4) ||
         (profile.town?.isEmpty == true && _currentPage == 4)) {
       validResult = true;
-    } else if ((profile.nation == null && _currentPage == 5) ||
-        (profile.nation?.isEmpty == true && _currentPage == 5)) {
+    } else if ((profile.relStatus == null && _currentPage == 5) ||
+        (profile.relStatus?.isEmpty == true && _currentPage == 5)) {
       validResult = true;
     } else if ((profile.smoke == null && _currentPage == 6) ||
         (profile.smoke?.isEmpty == true && _currentPage == 6)) {
@@ -98,10 +110,16 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     } else if ((profile.drink == null && _currentPage == 7) ||
         (profile.drink?.isEmpty == true && _currentPage == 7)) {
       validResult = true;
-    } else if (_currentPage == 8) {
-      validResult = false;
-    } else if ((profile.bio == null && _currentPage == 9) ||
-        (profile.bio?.isEmpty == true && _currentPage == 9)) {
+    }
+    //  else if ((profile.music == null && _currentPage == 10) ||
+    //     (profile.music?.isEmpty == true && _currentPage == 10)) {
+    //   validResult = true;
+    // }
+    else if ((profile.search == null && _currentPage == 11) ||
+        (profile.search?.isEmpty == true && _currentPage == 11)) {
+      validResult = true;
+    } else if ((profile.dateGender == null && _currentPage == 12) ||
+        (profile.dateGender?.isEmpty == true && _currentPage == 12)) {
       validResult = true;
     }
 
@@ -135,6 +153,14 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         return step9(profile);
       case 9:
         return step10(profile);
+      case 10:
+        return step11(profile);
+      case 11:
+        return step12(profile);
+      case 12:
+        return step13(profile);
+      case 13:
+        return step14(profile);
       default:
         return step1(profile);
     }
@@ -143,10 +169,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   Widget _visibleProfilePage() {
     ProfileModel profile = context.read<ProfileBloc>().state.profile;
     switch (_currentPage) {
-      case 0:
-        return const SizedBox(height: 0);
       case 1:
-        return const SizedBox(height: 0);
+        return visibleStep2(profile);
       case 2:
         return visibleStep3(profile);
       case 3:
@@ -240,7 +264,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                               const SizedBox(width: 8),
                               Expanded(
                                 child: StaticProgressBar(
-                                    count: 10, current: _currentPage + 1),
+                                    count: 14, current: _currentPage + 1),
                               ),
                               const SizedBox(width: 8),
                             ]),
@@ -299,9 +323,9 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                             setState(() {
                               _currentPage++;
                             });
-                            if (_currentPage >= 10) {
-                              _currentPage = 9;
-                              createProfile();
+                            if (_currentPage >= 14) {
+                              _currentPage = 13;
+                              // createProfile();
                             }
                           })),
                   const SizedBox(width: 24),
@@ -328,17 +352,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   }
 
   Widget step2(ProfileModel profile) {
-    return BirthdayChoose(
-      birthday: profile.birthday ?? DateTime.now(),
-      onChange: (DateTime? value) {
-        context
-            .read<ProfileBloc>()
-            .add(ProfileUpdated(profile.copyWith(birthday: value)));
-      },
-    );
-  }
-
-  Widget step3(ProfileModel profile) {
     return GendersChoose(
       gender: profile.gender,
       onChange: (value) {
@@ -349,7 +362,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     );
   }
 
-  Widget visibleStep3(ProfileModel profile) {
+  Widget visibleStep2(ProfileModel profile) {
     return CheckboxListTile(
       contentPadding: const EdgeInsets.all(0),
       value: profile.genderVisibility ?? false,
@@ -367,13 +380,42 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     );
   }
 
+  Widget step3(ProfileModel profile) {
+    return BirthdayChoose(
+      birthday: profile.birthday ?? DateTime.now(),
+      onChange: (DateTime? value) {
+        context
+            .read<ProfileBloc>()
+            .add(ProfileUpdated(profile.copyWith(birthday: value)));
+      },
+    );
+  }
+
+  Widget visibleStep3(ProfileModel profile) {
+    return CheckboxListTile(
+      contentPadding: const EdgeInsets.all(0),
+      value: profile.birthdayVisibility ?? false,
+      activeColor: Theme.of(context).colorScheme.primary,
+      checkColor: Theme.of(context).colorScheme.secondary,
+      controlAffinity: ListTileControlAffinity.leading,
+      onChanged: (bool? value) {
+        setState(() {
+          context
+              .read<ProfileBloc>()
+              .add(ProfileUpdated(profile.copyWith(birthdayVisibility: value)));
+        });
+      },
+      title: const Text("Visible on my profile"),
+    );
+  }
+
   Widget step4(ProfileModel profile) {
-    return GendersChoose(
-      gender: profile.dateGender,
+    return HeightInput(
+      height: profile.height ?? "",
       onChange: (value) {
         context
             .read<ProfileBloc>()
-            .add(ProfileUpdated(profile.copyWith(dateGender: value)));
+            .add(ProfileUpdated(profile.copyWith(height: value)));
       },
     );
   }
@@ -381,14 +423,15 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   Widget visibleStep4(ProfileModel profile) {
     return CheckboxListTile(
       contentPadding: const EdgeInsets.all(0),
-      value: profile.dateGenderVisibility ?? false,
+      value: profile.heightVisibility ?? false,
       activeColor: Theme.of(context).colorScheme.primary,
       checkColor: Theme.of(context).colorScheme.secondary,
       controlAffinity: ListTileControlAffinity.leading,
       onChanged: (bool? value) {
         setState(() {
-          context.read<ProfileBloc>().add(
-              ProfileUpdated(profile.copyWith(dateGenderVisibility: value)));
+          context
+              .read<ProfileBloc>()
+              .add(ProfileUpdated(profile.copyWith(heightVisibility: value)));
         });
       },
       title: const Text("Visible on my profile"),
@@ -425,12 +468,12 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   }
 
   Widget step6(ProfileModel profile) {
-    return NationalityChoose(
-      nation: profile.nation ?? [],
+    return RelStatus(
+      relStatus: profile.relStatus,
       onChange: (value) {
         context
             .read<ProfileBloc>()
-            .add(ProfileUpdated(profile.copyWith(nation: value)));
+            .add(ProfileUpdated(profile.copyWith(relStatus: value)));
       },
     );
   }
@@ -438,15 +481,14 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   Widget visibleStep6(ProfileModel profile) {
     return CheckboxListTile(
       contentPadding: const EdgeInsets.all(0),
-      value: profile.nationVisibility ?? false,
+      value: profile.relStatusVisibility ?? false,
       activeColor: Theme.of(context).colorScheme.primary,
       checkColor: Theme.of(context).colorScheme.secondary,
       controlAffinity: ListTileControlAffinity.leading,
       onChanged: (bool? value) {
         setState(() {
-          context
-              .read<ProfileBloc>()
-              .add(ProfileUpdated(profile.copyWith(nationVisibility: value)));
+          context.read<ProfileBloc>().add(
+              ProfileUpdated(profile.copyWith(relStatusVisibility: value)));
         });
       },
       title: const Text("Visible on my profile"),
@@ -522,6 +564,50 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
         context
             .read<ProfileBloc>()
             .add(ProfileUpdated(profile.copyWith(bio: value)));
+      },
+    );
+  }
+
+  Widget step11(ProfileModel profile) {
+    return MusicChoose(
+      music: profile.music ?? "",
+      onChange: (value) {
+        context
+            .read<ProfileBloc>()
+            .add(ProfileUpdated(profile.copyWith(music: value)));
+      },
+    );
+  }
+
+  Widget step12(ProfileModel profile) {
+    return SearchChoose(
+      search: profile.search ?? "",
+      onChange: (value) {
+        context
+            .read<ProfileBloc>()
+            .add(ProfileUpdated(profile.copyWith(search: value)));
+      },
+    );
+  }
+
+  Widget step13(ProfileModel profile) {
+    return DateGenderChoose(
+      dateGender: profile.dateGender ?? "",
+      onChange: (value) {
+        context
+            .read<ProfileBloc>()
+            .add(ProfileUpdated(profile.copyWith(dateGender: value)));
+      },
+    );
+  }
+
+  Widget step14(ProfileModel profile) {
+    return BioInput(
+      bio: profile.distance ?? "",
+      onChange: (value) {
+        context
+            .read<ProfileBloc>()
+            .add(ProfileUpdated(profile.copyWith(distance: value)));
       },
     );
   }

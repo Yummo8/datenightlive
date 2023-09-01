@@ -3,6 +3,7 @@ import 'package:DNL/core/blocs/profile/profile_bloc.dart';
 import 'package:DNL/core/models/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hl_image_picker/hl_image_picker.dart';
 import 'package:DNL/common/values/constants.dart';
 import 'package:DNL/common/utils/convTime.dart';
@@ -276,10 +277,21 @@ class _ProfilePhotosState extends State<ProfilePhotos> {
           ),
         ),
         const SizedBox(height: 20),
-        Text("Tap to edit,drag to reorder",
-            textAlign: TextAlign.center,
-            style: CustomTextStyle.getDescStyle(
-                Theme.of(context).colorScheme.onSurface)),
+        SizedBox(
+          child: Row(
+            children: [
+              const SizedBox(width: 50),
+              SvgPicture.asset(
+                "assets/icons/star.svg",
+                fit: BoxFit.cover,
+              ),
+              Text("Tap to add your photo or videos",
+                  textAlign: TextAlign.center,
+                  style: CustomTextStyle.getDescStyle(
+                      Theme.of(context).colorScheme.onSurface)),
+            ],
+          ),
+        ),
         const SizedBox(height: 24),
       ],
     );
