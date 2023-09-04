@@ -177,6 +177,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0+3"
+  dropdown_button2:
+    dependency: "direct main"
+    description:
+      name: dropdown_button2
+      sha256: "604b87283e251e0e4a0cb1d0fdfa91fd527702b06e80999c4054cecc603e10e7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.9.4"
   equatable:
     dependency: transitive
     description:
@@ -331,6 +339,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_multi_select_items:
+    dependency: "direct main"
+    description:
+      name: flutter_multi_select_items
+      sha256: d30af6dbf64c38c296110a9512eef91b196a185cca056cd1eb32614e5fa91d1c
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.2"
   flutter_spinkit:
     dependency: "direct main"
     description:

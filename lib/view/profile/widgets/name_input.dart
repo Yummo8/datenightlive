@@ -85,7 +85,7 @@ class _NameInputState extends State<NameInput>
             style: CustomTextStyle.getInputStyle(
                 Theme.of(context).colorScheme.onSecondary),
             decoration: InputDecoration(
-                hintText: "Last Name",
+                hintText: "Last Name (optional)",
                 fillColor: Theme.of(context).colorScheme.onBackground,
                 filled: true,
                 border: OutlineInputBorder(

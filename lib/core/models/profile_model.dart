@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:DNL/common/values/constants.dart';
 
 class ProfileModel {
@@ -8,6 +10,7 @@ class ProfileModel {
   final DateTime? birthday;
   final bool? birthdayVisibility;
   final String? height;
+  final String? bodyType;
   final bool? heightVisibility;
   final String? town;
   final bool? townVisibility;
@@ -20,10 +23,11 @@ class ProfileModel {
   final String? preferDrink;
   final List<Media>? medias;
   final String? bio;
-  final String? music;
-  final String? search;
+  final List<String>? music;
+  final List<bool>? search;
   final String? dateGender;
-  final String? distance;
+  final String? distanceUnit;
+  final double? distance;
 
   ProfileModel({
     this.firstname,
@@ -34,6 +38,7 @@ class ProfileModel {
     this.birthdayVisibility,
     this.height,
     this.heightVisibility,
+    this.bodyType,
     this.town,
     this.townVisibility,
     this.relStatus,
@@ -48,6 +53,7 @@ class ProfileModel {
     this.music,
     this.search,
     this.dateGender,
+    this.distanceUnit,
     this.distance,
   });
 
@@ -60,6 +66,7 @@ class ProfileModel {
     bool? birthdayVisibility,
     String? height,
     bool? heightVisibility,
+    String? bodyType,
     String? town,
     bool? townVisibility,
     String? relStatus,
@@ -75,10 +82,11 @@ class ProfileModel {
     bool? pronounVisibility,
     List<Media>? medias,
     String? bio,
-    String? music,
-    String? search,
+    List<String>? music,
+    List<bool>? search,
     String? dateGender,
-    String? distance,
+    String? distanceUnit,
+    double? distance,
   }) {
     return ProfileModel(
         firstname: firstname ?? this.firstname,
@@ -89,6 +97,7 @@ class ProfileModel {
         birthdayVisibility: birthdayVisibility ?? this.birthdayVisibility,
         height: height ?? this.height,
         heightVisibility: heightVisibility ?? this.heightVisibility,
+        bodyType: bodyType ?? this.bodyType,
         town: town ?? this.town,
         townVisibility: townVisibility ?? this.townVisibility,
         relStatus: relStatus ?? this.relStatus,
@@ -103,6 +112,7 @@ class ProfileModel {
         music: music ?? this.music,
         search: search ?? this.search,
         dateGender: dateGender ?? this.dateGender,
+        distanceUnit: distanceUnit ?? this.distanceUnit,
         distance: distance ?? this.distance);
   }
 
@@ -118,6 +128,7 @@ class ProfileModel {
       birthdayVisibility: snapshot['birthday_visibility'],
       height: snapshot['height'],
       heightVisibility: snapshot['height_visibility'],
+      bodyType: snapshot['bodyType'],
       town: snapshot['town'],
       townVisibility: snapshot['town_visibility'],
       relStatus: snapshot['relStatus'],
@@ -130,9 +141,14 @@ class ProfileModel {
       medias: List<Media>.from(
           snapshot['medias'].map((i) => Media.fromJson(i)).toList() ?? []),
       bio: snapshot['bio'],
-      music: snapshot['music'],
-      search: snapshot['search'],
+      music: snapshot['music'] == null
+          ? []
+          : List<String>.from(jsonDecode(snapshot['music']) ?? []),
+      search: snapshot['search'] == null
+          ? []
+          : List<bool>.from(jsonDecode(snapshot['search']) ?? []),
       dateGender: snapshot['dateGender'],
+      distanceUnit: snapshot['distanceUnit'],
       distance: snapshot['distance'],
     );
   }
@@ -146,6 +162,7 @@ class ProfileModel {
         'birthday_visibility': birthdayVisibility ?? false,
         'height': height,
         'height_visibility': heightVisibility ?? false,
+        'bodyType': bodyType,
         'town': town,
         'town_visibility': townVisibility ?? false,
         'relStatus': relStatus,
@@ -158,8 +175,9 @@ class ProfileModel {
         'medias': medias!.map((e) => e.toJson()).toList(),
         'bio': bio,
         'music': music,
-        'search': search,
+        'search': search ?? [false, false, false, false],
         'dateGender': dateGender,
+        'distanceUnit': distanceUnit,
         'distance': distance,
       };
 }

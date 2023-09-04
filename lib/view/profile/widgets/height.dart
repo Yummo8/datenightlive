@@ -1,16 +1,21 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:DNL/view/profile/widgets/bodyType_choose.dart';
 import 'package:flutter/material.dart';
 import 'package:DNL/common/values/custom_text_style.dart';
 
 class HeightInput extends StatefulWidget {
   final String height;
-  final Function onChange;
+  final String bodyType;
+  final Function onChangeHeight;
+  final Function onChangeBodyType;
 
   const HeightInput({
     super.key,
     required this.height,
-    required this.onChange,
+    required this.bodyType,
+    required this.onChangeHeight,
+    required this.onChangeBodyType,
   });
 
   @override
@@ -52,7 +57,7 @@ class _HeightInputState extends State<HeightInput>
             style: CustomTextStyle.getSubtitleStyle(
                 Theme.of(context).colorScheme.onSecondary),
             decoration: InputDecoration(
-                hintText: "182 cm",
+                hintText: "Your height (cm)",
                 fillColor: Theme.of(context).colorScheme.onBackground,
                 filled: true,
                 border: OutlineInputBorder(
@@ -63,9 +68,14 @@ class _HeightInputState extends State<HeightInput>
                 isDense: true),
             controller: _heightEditingController,
             onChanged: (String height) {
-              widget.onChange(height);
+              widget.onChangeHeight(height);
             },
           ),
+        ),
+        const SizedBox(height: 40),
+        BodyTypesChoose(
+          bodyType: widget.bodyType,
+          onChange: widget.onChangeBodyType,
         )
       ],
     );

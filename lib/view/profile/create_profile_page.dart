@@ -4,6 +4,7 @@ import 'package:DNL/common/utils/images.dart';
 import 'package:DNL/common/values/constants.dart';
 import 'package:DNL/view/profile/widgets/bio_input.dart';
 import 'package:DNL/view/profile/widgets/dategender_choose.dart';
+import 'package:DNL/view/profile/widgets/distance_slider.dart';
 import 'package:DNL/view/profile/widgets/height.dart';
 import 'package:DNL/view/profile/widgets/music_choose.dart';
 import 'package:DNL/view/profile/widgets/profile_photos.dart';
@@ -34,7 +35,6 @@ List<String> headings = [
   "What's your gender?",
   "Birthday and zodiac sign",
   "Height and body type",
-  "Where is your location?",
   "What is your relationship status?",
   "Do you smoke?",
   "Do you drink?",
@@ -43,6 +43,7 @@ List<String> headings = [
   "Favorite music genres",
   "What are you looking for?",
   "Looking to date?",
+  "Where is your location?",
   "Distance preference",
 ];
 
@@ -51,7 +52,6 @@ List<String> icons = [
   "face.svg",
   "cake.svg",
   "height.svg",
-  "home.svg",
   "relationship.svg",
   "smoke.svg",
   "drink.svg",
@@ -60,6 +60,7 @@ List<String> icons = [
   "music.svg",
   "search.svg",
   "selfcare.svg",
+  "home.svg",
   "distance.svg",
 ];
 
@@ -98,29 +99,35 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
     } else if ((profile.height == null && _currentPage == 3) ||
         (profile.height?.isEmpty == true && _currentPage == 3)) {
       validResult = true;
-    } else if ((profile.town == null && _currentPage == 4) ||
-        (profile.town?.isEmpty == true && _currentPage == 4)) {
+    } else if ((profile.bodyType == null && _currentPage == 3) ||
+        (profile.bodyType?.isEmpty == true && _currentPage == 3)) {
       validResult = true;
-    } else if ((profile.relStatus == null && _currentPage == 5) ||
-        (profile.relStatus?.isEmpty == true && _currentPage == 5)) {
+    } else if ((profile.town == null && _currentPage == 12) ||
+        (profile.town?.isEmpty == true && _currentPage == 12)) {
       validResult = true;
-    } else if ((profile.smoke == null && _currentPage == 6) ||
-        (profile.smoke?.isEmpty == true && _currentPage == 6)) {
+    } else if ((profile.relStatus == null && _currentPage == 4) ||
+        (profile.relStatus?.isEmpty == true && _currentPage == 4)) {
       validResult = true;
-    } else if ((profile.drink == null && _currentPage == 7) ||
-        (profile.drink?.isEmpty == true && _currentPage == 7)) {
+    } else if ((profile.smoke == null && _currentPage == 5) ||
+        (profile.smoke?.isEmpty == true && _currentPage == 5)) {
+      validResult = true;
+    } else if ((profile.drink == null && _currentPage == 6) ||
+        (profile.drink?.isEmpty == true && _currentPage == 6)) {
       validResult = true;
     }
-    //  else if ((profile.music == null && _currentPage == 10) ||
-    //     (profile.music?.isEmpty == true && _currentPage == 10)) {
+    //  else if ((profile.music == null && _currentPage == 9) ||
+    //     (profile.music?.isEmpty == true && _currentPage == 9)) {
     //   validResult = true;
     // }
-    else if ((profile.search == null && _currentPage == 11) ||
-        (profile.search?.isEmpty == true && _currentPage == 11)) {
+    else if ((profile.search == null && _currentPage == 10) ||
+        (profile.search?.isEmpty == true && _currentPage == 10)) {
       validResult = true;
-    } else if ((profile.dateGender == null && _currentPage == 12) ||
-        (profile.dateGender?.isEmpty == true && _currentPage == 12)) {
+    } else if ((profile.dateGender == null && _currentPage == 11) ||
+        (profile.dateGender?.isEmpty == true && _currentPage == 11)) {
       validResult = true;
+    } else if ((profile.distance == null && _currentPage == 13) ||
+        profile.distance == 0 && _currentPage == 13) {
+      validResult = false;
     }
 
     setState(() {
@@ -142,23 +149,23 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       case 3:
         return step4(profile);
       case 4:
-        return step5(profile);
-      case 5:
         return step6(profile);
-      case 6:
+      case 5:
         return step7(profile);
-      case 7:
+      case 6:
         return step8(profile);
-      case 8:
+      case 7:
         return step9(profile);
-      case 9:
+      case 8:
         return step10(profile);
-      case 10:
+      case 9:
         return step11(profile);
-      case 11:
+      case 10:
         return step12(profile);
-      case 12:
+      case 11:
         return step13(profile);
+      case 12:
+        return step5(profile);
       case 13:
         return step14(profile);
       default:
@@ -176,13 +183,13 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
       case 3:
         return visibleStep4(profile);
       case 4:
-        return visibleStep5(profile);
-      case 5:
         return visibleStep6(profile);
+      case 5:
+        return visibleStep7(profile);
       case 6:
-        return visibleStep7(profile);
-      case 7:
-        return visibleStep7(profile);
+        return visibleStep8(profile);
+      case 12:
+        return visibleStep5(profile);
       default:
         return const SizedBox(
           height: 0,
@@ -316,7 +323,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                   const SizedBox(width: 8),
                   Expanded(
                       child: Button(
-                          title: "NEXT",
+                          title: _currentPage == 13 ? "COMPLETE" : "NEXT",
                           flag: true,
                           disabled: _isValid,
                           onPressed: () {
@@ -412,10 +419,16 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   Widget step4(ProfileModel profile) {
     return HeightInput(
       height: profile.height ?? "",
-      onChange: (value) {
+      bodyType: profile.bodyType ?? "",
+      onChangeHeight: (value) {
         context
             .read<ProfileBloc>()
             .add(ProfileUpdated(profile.copyWith(height: value)));
+      },
+      onChangeBodyType: (value) {
+        context
+            .read<ProfileBloc>()
+            .add(ProfileUpdated(profile.copyWith(bodyType: value)));
       },
     );
   }
@@ -527,10 +540,16 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   Widget step8(ProfileModel profile) {
     return DrinkChoose(
       drink: profile.drink ?? "",
+      preferDrink: profile.preferDrink ?? "",
       onChange: (value) {
         context
             .read<ProfileBloc>()
             .add(ProfileUpdated(profile.copyWith(drink: value)));
+      },
+      onChangePrefer: (value) {
+        context
+            .read<ProfileBloc>()
+            .add(ProfileUpdated(profile.copyWith(preferDrink: value)));
       },
     );
   }
@@ -570,7 +589,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
 
   Widget step11(ProfileModel profile) {
     return MusicChoose(
-      music: profile.music ?? "",
+      music: profile.music ?? [],
       onChange: (value) {
         context
             .read<ProfileBloc>()
@@ -581,7 +600,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
 
   Widget step12(ProfileModel profile) {
     return SearchChoose(
-      search: profile.search ?? "",
+      search: profile.search ?? [false, false, false, false],
       onChange: (value) {
         context
             .read<ProfileBloc>()
@@ -602,12 +621,18 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   }
 
   Widget step14(ProfileModel profile) {
-    return BioInput(
-      bio: profile.distance ?? "",
-      onChange: (value) {
+    return DistanceSlider(
+      unit: profile.distanceUnit ?? "mi",
+      value: profile.distance ?? 0.0,
+      onChangedValue: (value) {
         context
             .read<ProfileBloc>()
             .add(ProfileUpdated(profile.copyWith(distance: value)));
+      },
+      onChangedUnit: (value) {
+        context
+            .read<ProfileBloc>()
+            .add(ProfileUpdated(profile.copyWith(distanceUnit: value)));
       },
     );
   }

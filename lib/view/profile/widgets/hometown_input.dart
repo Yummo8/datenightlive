@@ -51,7 +51,7 @@ class _HomeTownInputState extends State<HomeTownInput>
             style: CustomTextStyle.getSubtitleStyle(
                 Theme.of(context).colorScheme.onSecondary),
             decoration: InputDecoration(
-                hintText: "New York, US",
+                hintText: "Your location (required)",
                 fillColor: Theme.of(context).colorScheme.onBackground,
                 filled: true,
                 border: OutlineInputBorder(

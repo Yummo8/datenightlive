@@ -2,9 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:DNL/common/values/colors.dart';
+import 'package:flutter_multi_select_items/flutter_multi_select_items.dart';
 
 class MusicChoose extends StatefulWidget {
-  final String music;
+  final List<String> music;
   final Function onChange;
 
   const MusicChoose({
@@ -20,15 +21,35 @@ class MusicChoose extends StatefulWidget {
 class _MusicChooseState extends State<MusicChoose>
     with AutomaticKeepAliveClientMixin<MusicChoose> {
   final TextEditingController _controller = TextEditingController();
+  int a = 1;
+
+  final List<String> list = [
+    'Jazz',
+    'Rap',
+    'Country',
+    'Blues',
+    'Classical',
+    'Pop',
+    'R&B',
+    'Punk',
+    'Metal',
+    'Reggae',
+    'Afrobeat',
+    'Indie',
+    'Alternative',
+    'Soul',
+    'House',
+    'Techno',
+    'Folk',
+    'Disco',
+    'Latino',
+    'Gospel',
+    'K-Pop',
+    'EDM',
+  ];
 
   @override
   bool get wantKeepAlive => true;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.text = widget.music;
-  }
 
   @override
   void dispose() {
@@ -39,30 +60,47 @@ class _MusicChooseState extends State<MusicChoose>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return Container(
-      decoration: new BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
-          border: new Border.all(color: Theme.of(context).colorScheme.outline),
-          borderRadius: new BorderRadius.circular(15.0)),
-      padding: const EdgeInsets.all(12),
-      child: TextField(
-        controller: _controller,
-        maxLength: 200,
-        maxLines: 10,
-        decoration: const InputDecoration(
-          hintText: "My name is ...",
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          contentPadding: EdgeInsets.zero,
+        width: double.infinity,
+        margin: const EdgeInsets.fromLTRB(4, 0, 4, 0),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: ThemeColors.input,
+          borderRadius: BorderRadius.circular(10.0),
         ),
-        style: const TextStyle(color: ThemeColors.onSecondary, fontSize: 15),
-        onChanged: (value) {
-          widget.onChange(value);
-        },
-      ),
-    );
+        child: Column(
+          children: [
+            MultiSelectContainer(
+                itemsDecoration: MultiSelectDecorations(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: ThemeColors.primary),
+                      borderRadius: BorderRadius.circular(20)),
+                  selectedDecoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                          colors: [ThemeColors.primary, ThemeColors.primary]),
+                      border: Border.all(color: ThemeColors.primary),
+                      borderRadius: BorderRadius.circular(20)),
+                ),
+                itemsPadding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 5, bottom: 5),
+                textStyles: const MultiSelectTextStyles(
+                    textStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: ThemeColors.primary,
+                      fontSize: 16,
+                    ),
+                    selectedTextStyle: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 16)),
+                items: list
+                    .map((e) => MultiSelectCard(value: e, label: e))
+                    .toList(),
+                onChange: (allSelectedItems, selectedItem) {
+                  widget.onChange(allSelectedItems);
+                }),
+          ],
+        ));
   }
 }
