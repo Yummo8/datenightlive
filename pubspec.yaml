@@ -54,6 +54,8 @@ dependencies:
   dotted_border: ^2.0.0+3
   cloud_firestore: ^4.8.5
   hl_image_picker: ^1.2.6
+  flutter_multi_select_items: ^0.4.2
+  dropdown_button2: 1.9.4
 
 dev_dependencies:
   flutter_test:

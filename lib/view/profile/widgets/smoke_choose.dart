@@ -21,10 +21,8 @@ class _SmokeChooseState extends State<SmokeChoose> {
   @override
   Widget build(BuildContext context) {
     final List<String> options = [
-      'Yes',
-      'Sometimes',
-      'No',
-      'Prefer not to say',
+      'Smoker',
+      'Non Smoker',
     ];
 
     return Column(

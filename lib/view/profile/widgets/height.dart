@@ -1,25 +1,31 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:DNL/view/profile/widgets/bodyType_choose.dart';
 import 'package:flutter/material.dart';
 import 'package:DNL/common/values/custom_text_style.dart';
 
-class HomeTownInput extends StatefulWidget {
-  final String town;
-  final Function onChange;
+class HeightInput extends StatefulWidget {
+  final String height;
+  final String bodyType;
+  final Function onChangeHeight;
+  final Function onChangeBodyType;
 
-  const HomeTownInput({
+  const HeightInput({
     super.key,
-    required this.town,
-    required this.onChange,
+    required this.height,
+    required this.bodyType,
+    required this.onChangeHeight,
+    required this.onChangeBodyType,
   });
 
   @override
-  _HomeTownInputState createState() => _HomeTownInputState();
+  _HeightInputState createState() => _HeightInputState();
 }
 
-class _HomeTownInputState extends State<HomeTownInput>
-    with AutomaticKeepAliveClientMixin<HomeTownInput> {
-  final TextEditingController _townEditingController = TextEditingController();
+class _HeightInputState extends State<HeightInput>
+    with AutomaticKeepAliveClientMixin<HeightInput> {
+  final TextEditingController _heightEditingController =
+      TextEditingController();
 
   @override
   bool get wantKeepAlive => true;
@@ -27,12 +33,12 @@ class _HomeTownInputState extends State<HomeTownInput>
   @override
   void initState() {
     super.initState();
-    _townEditingController.text = widget.town;
+    _heightEditingController.text = widget.height;
   }
 
   @override
   void dispose() {
-    _townEditingController.dispose();
+    _heightEditingController.dispose();
     super.dispose();
   }
 
@@ -51,7 +57,7 @@ class _HomeTownInputState extends State<HomeTownInput>
             style: CustomTextStyle.getSubtitleStyle(
                 Theme.of(context).colorScheme.onSecondary),
             decoration: InputDecoration(
-                hintText: "Your location (required)",
+                hintText: "Your height (cm)",
                 fillColor: Theme.of(context).colorScheme.onBackground,
                 filled: true,
                 border: OutlineInputBorder(
@@ -60,11 +66,16 @@ class _HomeTownInputState extends State<HomeTownInput>
                 hintStyle: CustomTextStyle.getSubtitleStyle(
                     Theme.of(context).colorScheme.onSurface),
                 isDense: true),
-            controller: _townEditingController,
-            onChanged: (String town) {
-              widget.onChange(town);
+            controller: _heightEditingController,
+            onChanged: (String height) {
+              widget.onChangeHeight(height);
             },
           ),
+        ),
+        const SizedBox(height: 40),
+        BodyTypesChoose(
+          bodyType: widget.bodyType,
+          onChange: widget.onChangeBodyType,
         )
       ],
     );

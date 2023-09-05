@@ -3,33 +3,36 @@
 import 'package:flutter/material.dart';
 import 'package:DNL/common/widgets/custom_radio_group.dart';
 
-List<String> genders = [
+List<String> dateGenders = [
   'Male',
   'Female',
+  'Both',
 ];
 
-class GendersChoose extends StatefulWidget {
-  final String? gender;
+class DateGenderChoose extends StatefulWidget {
+  final String? dateGender;
   final Function onChange;
 
-  const GendersChoose({
+  const DateGenderChoose({
     super.key,
-    this.gender,
+    this.dateGender,
     required this.onChange,
   });
 
   @override
-  _GendersChooseState createState() => _GendersChooseState();
+  _DateGenderChooseState createState() => _DateGenderChooseState();
 }
 
-class _GendersChooseState extends State<GendersChoose> {
+class _DateGenderChooseState extends State<DateGenderChoose> {
   String option = "";
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CustomRadioGroup(
-            value: widget.gender, options: genders, onChanged: widget.onChange),
+            value: widget.dateGender,
+            options: dateGenders,
+            onChanged: widget.onChange),
       ],
     );
   }

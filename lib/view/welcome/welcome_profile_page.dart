@@ -36,17 +36,17 @@ class WelcomeProfilePage extends StatelessWidget {
                     Column(
                       children: [
                         const SizedBox(
-                          height: 61,
+                          height: 80,
                         ),
                         SvgPicture.asset(
-                          "assets/icons/contact.svg",
+                          "assets/icons/welcome.svg",
                           fit: BoxFit.cover,
                         ),
                         const SizedBox(
-                          height: 12,
+                          height: 16,
                         ),
                         Text(
-                          "It's Time to make your profile beautiful!",
+                          "It's time to set up your profile",
                           textAlign: TextAlign.center,
                           style: CustomTextStyle.getTitleStyle(
                               Theme.of(context).colorScheme.secondary),

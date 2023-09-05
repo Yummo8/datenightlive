@@ -85,7 +85,7 @@ class _NameInputState extends State<NameInput>
             style: CustomTextStyle.getInputStyle(
                 Theme.of(context).colorScheme.onSecondary),
             decoration: InputDecoration(
-                hintText: "Last Name",
+                hintText: "Last Name (optional)",
                 fillColor: Theme.of(context).colorScheme.onBackground,
                 filled: true,
                 border: OutlineInputBorder(
@@ -100,7 +100,7 @@ class _NameInputState extends State<NameInput>
             },
           ),
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 10),
         Text("Last Name is optional, and only shared with matches",
             style: CustomTextStyle.getSpanStyle(
                 Theme.of(context).colorScheme.onSurface)),
