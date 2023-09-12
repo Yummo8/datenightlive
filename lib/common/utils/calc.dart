@@ -1,5 +1,3 @@
-import 'dart:math';
-
 double km2mi(double km) {
   double mi = km * 0.621371;
   return mi;
